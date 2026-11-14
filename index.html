@@ -124,7 +124,7 @@ document.querySelectorAll('.cf:not(.g)>div').forEach(c=>{c.style.cursor='pointer
 try{localStorage.removeItem('hobOW');if(sessionStorage.getItem('hobOW'))setOW(1)}catch(e){}
 drawCats();
 /* ===== Rs 3,000 package: photos + add-ons ===== */
-const R3=["img/10.jpg", "img/11.jpg", "img/12.jpg", "img/13.jpg", "img/14.jpg", "img/15.jpg", "img/16.jpg", "img/17.jpg", "img/18.jpg", "img/19.jpg", "img/20.jpg", "img/21.jpg", "img/22.jpg", "img/23.jpg", "img/24.jpg", "img/25.jpg", "img/26.jpg", "img/27.jpg", "img/28.jpg", "img/29.jpg", "img/30.jpg", "img/31.jpg", "img/32.jpg", "img/33.jpg", "img/34.jpg", "img/35.jpg", "img/36.jpg", "img/37.jpg", "img/38.jpg", "img/39.jpg", "img/40.jpg", "img/41.jpg", "img/42.jpg", "img/43.jpg", "img/44.jpg"];
+const R3=["img/10.jpg", "img/11.jpg", "img/12.jpg", "img/14.jpg", "img/15.jpg", "img/16.jpg", "img/17.jpg", "img/18.jpg", "img/19.jpg", "img/20.jpg", "img/21.jpg", "img/22.jpg", "img/23.jpg", "img/24.jpg", "img/25.jpg", "img/26.jpg", "img/28.jpg", "img/29.jpg", "img/30.jpg", "img/31.jpg", "img/32.jpg", "img/33.jpg", "img/34.jpg", "img/35.jpg", "img/36.jpg", "img/37.jpg", "img/38.jpg", "img/39.jpg", "img/40.jpg", "img/41.jpg", "img/42.jpg", "img/43.jpg", "img/44.jpg"];
 const AD3=[{n:'Extra Balloons',p:5,u:'₹5 each',s:10},{n:'Balloon Standee with Foil',p:160,u:'₹160 each',s:1},{n:'Welcome Board',p:800,u:'₹800',s:1},{n:'Table Top',p:100,u:'₹100 each',s:1},{n:'Entry Gate',p:1400,u:'₹1,400',s:1}];
 let Q3=[],S3=-1;const inr3=n=>'₹'+n.toLocaleString('en-IN');
 function open3(){S3=-1;Q3=AD3.map(()=>0);po3.src=document.querySelector('.cf:not(.g)>div img').src;
@@ -156,7 +156,7 @@ pk3=function(i){S3=i;document.querySelectorAll('#g3 .th:not(.add)').forEach((e,j
 {const _so=setOW;setOW=function(v){_so(v);if(p3.classList.contains('on'))draw3()}}
 /* ===== colour-wise filter (Rs 3,000 package) ===== */
 const CF=['Purple','Pink','Blue','Gold','Black','White','Green','Red','Multi'],CC={Purple:'#8e24aa',Pink:'#f48fb1',Blue:'#1e88e5',Gold:'#d4af37',Black:'#222',White:'#f5f5f5',Green:'#43a047',Red:'#e53935',Multi:'conic-gradient(#e53935,#fdd835,#43a047,#1e88e5,#8e24aa,#e53935)'};
-const T3=[['Blue','Gold'],['Black','Gold'],['Green'],['Black','Gold'],['Purple'],['Blue'],['Pink','Black'],['Multi'],['Purple','Gold'],['Pink'],['Gold'],['Purple'],['Pink','Blue'],['Gold','White'],['Multi'],['Pink','Green'],['White','Gold'],['Pink','Blue'],['Pink','Blue','Gold'],['Blue'],['Purple','Pink'],['Purple','Gold'],['Pink','Red'],['Purple','Pink'],['Pink','Black','Gold'],['Green','Red'],['Purple'],['White','Gold'],['Black','Gold'],['Blue'],['Pink','Gold'],['Gold','White'],['Pink'],['Black','Gold'],['Gold','White']];
+const T3=[['Blue', 'Gold'], ['Black', 'Gold'], ['Green'], ['Purple'], ['Blue'], ['Pink', 'Black'], ['Multi'], ['Purple', 'Gold'], ['Pink'], ['Gold'], ['Purple'], ['Pink', 'Blue'], ['Gold', 'White'], ['Multi'], ['Pink', 'Green'], ['White', 'Gold'], ['Pink', 'Blue', 'Gold'], ['Blue'], ['Purple', 'Pink'], ['Purple', 'Gold'], ['Pink', 'Red'], ['Purple', 'Pink'], ['Pink', 'Black', 'Gold'], ['Green', 'Red'], ['Purple'], ['White', 'Gold'], ['Black', 'Gold'], ['Blue'], ['Pink', 'Gold'], ['Gold', 'White'], ['Pink'], ['Black', 'Gold'], ['Gold', 'White']];
 let F3='All',TX3=[];try{TX3=JSON.parse(localStorage.getItem('hobT3')||'[]')}catch(e){}
 const fcEl=document.createElement('div');fcEl.className='fc';g3.parentNode.insertBefore(fcEl,g3);
 function svT(){try{localStorage.setItem('hobT3',JSON.stringify(TX3))}catch(e){}}
