@@ -15,6 +15,6 @@ def rep(m):
     return seen[h]
 t=rx.sub(rep,s)
 t=t.replace("location.hostname.includes('houseofballoon')?location.href:'https://claude.ai/artifact/LM8jMBnzMQzMWbStyrZwW1'","location.href.split('#')[0]")
-t=t.replace('</head>','<style>@media(min-width:900px){body{max-width:880px;margin:0 auto;box-shadow:0 0 80px #0006}}</style><script src="sync.js"></script></head>',1)
+t=t.replace('</head>','<style>@media(min-width:900px){body{max-width:600px;margin:0 auto;box-shadow:0 0 80px #0006}}</style><script src="sync.js"></script></head>',1)
 open('index.html','w',encoding='utf8').write(t)
 print(n[0],len(s),len(t))
