@@ -19,5 +19,7 @@ t=t.replace('</head>','<style>@media(min-width:900px){body{max-width:600px;margi
 import ast,json
 m=re.search(r'R3=(\[[^\]]*\])',t);a=[x for i,x in enumerate(json.loads(m.group(1))) if i not in (3,17)];t=t[:m.start(1)]+json.dumps(a)+t[m.end(1):]
 m=re.search(r'T3=(\[\[.*?\]\]);',t,re.S);b=[x for i,x in enumerate(ast.literal_eval(m.group(1))) if i not in (3,17)];t=t[:m.start(1)]+repr(b)+t[m.end(1):]
+t=re.sub(r'<div id="ofr".*?</div></div></div>','',t,flags=re.S)
+t=t.replace('<a class="pill" href="#" onclick="openOffer();return false">🎁 Offers</a>','')
 open('index.html','w',encoding='utf8').write(t)
 print(n[0],len(s),len(t))
