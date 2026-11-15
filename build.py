@@ -21,5 +21,10 @@ m=re.search(r'R3=(\[[^\]]*\])',t);a=[x for i,x in enumerate(json.loads(m.group(1
 m=re.search(r'T3=(\[\[.*?\]\]);',t,re.S);b=[x for i,x in enumerate(ast.literal_eval(m.group(1))) if i not in (3,17)];t=t[:m.start(1)]+repr(b)+t[m.end(1):]
 t=re.sub(r'<div id="ofr".*?</div></div></div>','',t,flags=re.S)
 t=t.replace('<a class="pill" href="#" onclick="openOffer();return false">🎁 Offers</a>','')
+# --- v2: photos IndexedDB (sync.js) ke liye main script ko deferred start karo ---
+anc='<script>const io=new IntersectionObserver('
+if t.count(anc)==1:
+    t=t.replace(anc,'<script>window.hobStart=function(){if(window.__hs)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",window.hobStart);return}var t=document.getElementById("hobmain");if(!t)return;window.__hs=1;var s=document.createElement("script");s.text=t.text;document.body.appendChild(s)};setTimeout(function(){window.hobStart()},3500);if(window.__idbReady)window.hobStart()</script><script type="text/hobmain" id="hobmain">const io=new IntersectionObserver(')
+t=t.replace('800/Math.max(im.width,im.height)','720/Math.max(im.width,im.height)').replace("toDataURL('image/jpeg',.7)","toDataURL('image/jpeg',.65)")
 open('index.html','w',encoding='utf8').write(t)
 print(n[0],len(s),len(t))
