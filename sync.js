@@ -3,7 +3,38 @@
 var K='AIzaSyDmHZw0NogvE9CClsbWUngRROFXoVRB_aM',P='house-of-balloon-crm';
 var FS='https://firestore.googleapis.com/v1/projects/'+P+'/databases/(default)/documents/hob_site';
 var RX=/^hob(CA|[HXT]\d+)$/,CH=600000;
-var LS=window.localStorage,gi=LS.getItem.bind(LS),osi0=Storage.prototype.setItem;
+var LS=window.localStorage;
+/* ---- v2: photos IndexedDB mein (localStorage ki 5MB limit nahi) ---- */
+var IDBON=false,MEM={},idb=null,ptm={};
+var rawG=Storage.prototype.getItem,rawS=Storage.prototype.setItem,rawR=Storage.prototype.removeItem;
+function idbPut(k){(function(){try{var st=idb.transaction('kv','readwrite').objectStore('kv');if(Object.prototype.hasOwnProperty.call(MEM,k))st.put(MEM[k],k);else st['delete'](k)}catch(e){}})()}
+Storage.prototype.getItem=function(k){if(this===LS&&IDBON&&RX.test(k))return Object.prototype.hasOwnProperty.call(MEM,k)?MEM[k]:null;return rawG.call(this,k)};
+Storage.prototype.setItem=function(k,v){if(this===LS&&IDBON&&RX.test(k)){MEM[k]=String(v);idbPut(k);return}return rawS.call(this,k,v)};
+Storage.prototype.removeItem=function(k){if(this===LS&&IDBON&&RX.test(k)){delete MEM[k];idbPut(k);return}return rawR.call(this,k)};
+function initIDB(done){
+  var fin=false,end=function(ok){if(fin)return;fin=true;IDBON=ok;done()};
+  if(!window.indexedDB){end(false);return}
+  setTimeout(function(){end(false)},2500);
+  try{
+    var rq=indexedDB.open('hobsite',1);
+    rq.onupgradeneeded=function(){rq.result.createObjectStore('kv')};
+    rq.onerror=rq.onblocked=function(){end(false)};
+    rq.onsuccess=function(){
+      if(fin){try{rq.result.close()}catch(e){}return}
+      idb=rq.result;var cur=idb.transaction('kv','readonly').objectStore('kv').openCursor();
+      cur.onerror=function(){end(false)};
+      cur.onsuccess=function(){var c=cur.result;if(c){MEM[c.key]=c.value;c['continue']();return}
+        var mv=[];try{for(var i=0;i<LS.length;i++){var k=LS.key(i);if(RX.test(k))mv.push(k)}}catch(e){}
+        if(!mv.length){end(true);return}
+        var tx=idb.transaction('kv','readwrite'),st=tx.objectStore('kv');
+        mv.forEach(function(k){if(!Object.prototype.hasOwnProperty.call(MEM,k)){var v=rawG.call(LS,k);if(v!=null){MEM[k]=v;st.put(v,k)}}});
+        tx.oncomplete=function(){mv.forEach(function(k){try{rawR.call(LS,k)}catch(e){}});end(true)};
+        tx.onerror=tx.onabort=function(){mv.forEach(function(k){if(!Object.prototype.hasOwnProperty.call(MEM,k)||true){}});end(false)};
+      };
+    };
+  }catch(e){end(false)}
+}
+var gi=LS.getItem.bind(LS),osi0=Storage.prototype.setItem;
 function g(k){try{return gi(k)}catch(e){return null}}
 function s(k,v){try{osi0.call(LS,k,v)}catch(e){}}
 var tok=null,tokExp=0,timers={};
@@ -68,14 +99,12 @@ function pull(){
 function publishLocal(){
   return fetch(FS+'/_v').then(function(r){return r.ok?r.json():{}}).then(function(j){
     var f=(j&&j.fields)||{},ps=[];
-    for(var i=0;i<LS.length;i++){var k=LS.key(i);if(RX.test(k)&&!f[k]&&g(k))ps.push(k)}
+    var ks=Object.keys(MEM);try{for(var i=0;i<LS.length;i++){var k0=LS.key(i);if(RX.test(k0)&&ks.indexOf(k0)<0)ks.push(k0)}}catch(e){}ks.forEach(function(k){if(RX.test(k)&&!f[k]&&g(k))ps.push(k)});
     return ps.reduce(function(p,k){return p.then(function(){return push(k)})},Promise.resolve());
   });
 }
-pull();
-/* ---- owner button gate ---- */
-window.addEventListener('load',function(){
-  var o=window.togOW;if(typeof o!=='function')return;
+function gate(){
+  var o=window.togOW;if(typeof o!=='function')return false;
   window.togOW=function(){
     var on=false;try{on=!!OW}catch(e){}
     if(on){return o.apply(this,arguments)}
@@ -85,5 +114,11 @@ window.addEventListener('load',function(){
     });
   };
   if(g('hobRT'))ensureTok().then(publishLocal,function(){});
+  return true;
+}
+initIDB(function(){
+  pull();
+  window.__idbReady=1;if(window.hobStart)window.hobStart();
+  var n=0,tm=setInterval(function(){if(gate()||++n>200)clearInterval(tm)},50);
 });
 })();
