@@ -19,14 +19,14 @@ function push(key){
   for(var i=0;i<n;i++)ps.push(patch(key+'_'+i,{d:{stringValue:v.slice(i*CH,(i+1)*CH)}}));
   return Promise.all(ps).then(function(){
     var t=Date.now(),f={},m=[];f[key]={integerValue:String(t)};f[key+'_n']={integerValue:String(n)};m=[key,key+'_n'];
-    return patch('_v',f,m).then(function(){s('hobV_'+key,String(t));toast('✅ Live save ho gaya')});
+    return patch('_v',f,m).then(function(){s('hobV_'+key,String(t));toast('✅ Save ho gaya – ab sabko dikhegi')});
   }).catch(function(e){toast('⚠ Save nahi hua – internet/login check karo')});
 }
 function queue(key){clearTimeout(timers[key]);timers[key]=setTimeout(function(){ensureTok().then(function(){push(key)})},700)}
 var osi=Storage.prototype.setItem;
 Storage.prototype.setItem=function(k,v){
   var r=osi.call(this,k,v);
-  if(this===LS&&RX.test(k)&&tok)queue(k);
+  if(this===LS&&RX.test(k)){if(tok)queue(k);else{var on=false;try{on=!!OW}catch(e){}if(on)toast('⚠ Login nahi hai – Owner dabake login karo, tab save hoga')}}
   return r;
 };
 /* ---- auth ---- */
@@ -40,7 +40,7 @@ function login(email,pw){
   return fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+K,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pw,returnSecureToken:true})})
    .then(function(r){return r.json()}).then(function(j){if(!j.idToken)throw new Error(j.error&&j.error.message||'login');tok=j.idToken;tokExp=Date.now()+(+j.expiresIn||3600)*1000;s('hobRT',j.refreshToken);s('hobEM',email)});
 }
-function toast(m){var d=document.getElementById('hobToast');if(!d){d=document.createElement('div');d.id='hobToast';d.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#000d;color:#fff;padding:10px 16px;border-radius:20px;font:600 13px Outfit,system-ui;z-index:99999;transition:opacity .3s';(document.body||document.documentElement).appendChild(d)}d.textContent=m;d.style.opacity=1;clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity=0},2200)}
+function toast(m){var d=document.getElementById('hobToast');if(!d){d=document.createElement('div');d.id='hobToast';d.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#000d;color:#fff;padding:10px 16px;border-radius:20px;font:600 13px Outfit,system-ui;z-index:99999;transition:opacity .3s';(document.body||document.documentElement).appendChild(d)}d.textContent=m;d.style.opacity=1;clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity=0},4500)}
 function modal(cb){
   var o=document.createElement('div');o.style.cssText='position:fixed;inset:0;background:#000b;z-index:99998;display:flex;align-items:center;justify-content:center;padding:20px';
   o.innerHTML='<form style="background:#1a1030;border:1px solid #fff3;border-radius:18px;padding:20px;width:100%;max-width:340px;color:#fff;font:14px Outfit,system-ui"><b style="font-size:17px">👑 Owner login</b><p style="opacity:.7;margin:6px 0 12px;font-size:12px">Sirf owner ke liye</p><input name=e type=email placeholder=Email autocomplete=username style="width:100%;padding:11px;border-radius:10px;border:1px solid #fff3;background:#0006;color:#fff;margin-bottom:8px"><input name=p type=password placeholder="Password / PIN" autocomplete=current-password style="width:100%;padding:11px;border-radius:10px;border:1px solid #fff3;background:#0006;color:#fff"><div class=m style="color:#ff8a80;font-size:12px;min-height:18px;margin:6px 0"></div><div style="display:flex;gap:8px"><button type=submit style="flex:1;padding:11px;border:0;border-radius:10px;background:linear-gradient(90deg,#ff3d9a,#7c4dff);color:#fff;font-weight:700">Login</button><button type=button class=c style="padding:11px 16px;border:1px solid #fff3;border-radius:10px;background:none;color:#fff">Cancel</button></div></form>';
