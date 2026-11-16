@@ -84,6 +84,7 @@ _sec='<section class="seo" id="about"><h2>Balloon Decoration in Delhi NCR</h2><p
 t=t.replace('<footer class="ft">',_sec+'<footer class="ft">',1)
 _alt={'01':'House of Balloons logo','02':'Rs 3,000 ring balloon decoration package in Delhi NCR','03':'Rs 8,000 premium birthday balloon decoration package in Delhi NCR'}
 t=re.sub(r'<img src="img/(\d+)\.jpg" alt="">',lambda m:'<img src="img/%s.jpg" alt="%s">'%(m.group(1),_alt.get(m.group(1),'Balloon decoration by House of Balloons, Delhi NCR')),t)
+t=t.replace('Service Area: Gurugram','Service Area: Delhi NCR (Gurugram, Delhi, Noida, Faridabad, Ghaziabad)')
 open('sitemap.xml','w',encoding='utf8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>'+_u+'</loc><lastmod>'+datetime.date.today().isoformat()+'</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url></urlset>\n')
 open('robots.txt','w',encoding='utf8').write('User-agent: *\nAllow: /\n\nSitemap: '+_u+'sitemap.xml\n')
 open('index.html','w',encoding='utf8').write(t)
