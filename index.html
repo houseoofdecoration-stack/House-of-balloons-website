@@ -211,4 +211,15 @@ box.addEventListener('click',function(e){var g=e.target.closest('.gx');if(g&&win
 ['sv3','svP'].forEach(function(n){var f=window[n];if(typeof f=='function'){window[n]=function(){var r=f.apply(this,arguments);try{draw()}catch(x){}return r}}});
 draw();
 })();
+/* ===== Package page: photo par tap = sirf badi photo; add-ons + event details + Book page par hi (pop-up box hata diya) ===== */
+(function(){try{
+var bx=p3.querySelector('.bx'),bar=ppo.querySelector('.bar')||p3.querySelector('.bar');
+if(!bx||!bar)return;
+bx.append(s3,d3,bar);d3.style.display='block';ppo.remove();
+var st=document.createElement('style');st.textContent='#p3 .bx>.bar{position:sticky;bottom:0;left:0;right:0;z-index:3;margin:10px -2px 0;max-width:none}#p3 #s3 h3{margin:12px 0 4px}#p3 #s3 .tp{font-size:12px;opacity:.7;margin:0 0 6px}';document.head.appendChild(st);
+var _o3=open3;open3=function(){var r=_o3.apply(this,arguments);d3.style.display='block';return r};
+pk3=function(i){S3=i;document.querySelectorAll('#g3 .th[data-i]').forEach(function(e){e.classList.toggle('on',+e.dataset.i==i)});
+ var u=L3()[i];s3.innerHTML='<h3>Selected: Photo #'+(i+1)+'</h3><p class="tp">Booking message mein is photo ka number jayega.</p>';
+ zm.firstChild.src=u;zm.classList.add('on');c3()};
+}catch(e){}})();
 </script></body></html>
