@@ -211,17 +211,6 @@ box.addEventListener('click',function(e){var g=e.target.closest('.gx');if(g&&win
 ['sv3','svP'].forEach(function(n){var f=window[n];if(typeof f=='function'){window[n]=function(){var r=f.apply(this,arguments);try{draw()}catch(x){}return r}}});
 draw();
 })();
-/* ===== Package page: photo par tap = sirf badi photo; add-ons + event details + Book page par hi (pop-up box hata diya) ===== */
-(function(){try{
-var bx=p3.querySelector('.bx'),bar=ppo.querySelector('.bar')||p3.querySelector('.bar');
-if(!bx||!bar)return;
-bx.append(s3,d3,bar);d3.style.display='block';ppo.remove();
-var st=document.createElement('style');st.textContent='#p3 .bx>.bar{position:sticky;bottom:0;left:0;right:0;z-index:3;margin:10px -2px 0;max-width:none}#p3 #s3 h3{margin:12px 0 4px}#p3 #s3 .tp{font-size:12px;opacity:.7;margin:0 0 6px}';document.head.appendChild(st);
-var _o3=open3;open3=function(){var r=_o3.apply(this,arguments);d3.style.display='block';return r};
-pk3=function(i){S3=i;document.querySelectorAll('#g3 .th[data-i]').forEach(function(e){e.classList.toggle('on',+e.dataset.i==i)});
- var u=L3()[i];s3.innerHTML='<h3>Selected: Photo #'+(i+1)+'</h3><p class="tp">Booking message mein is photo ka number jayega.</p>';
- zm.firstChild.src=u;zm.classList.add('on');c3()};
-}catch(e){}})();
 /* ===== Decoration Types: owner mode me har photo par Edit (badlo), Left/Right (order) + Delete + Add ===== */
 (function(){try{
 var st=document.createElement('style');st.textContent='.pgx .th .eb{position:absolute;left:4px;top:4px;width:30px;height:30px;border-radius:50%;background:#000a;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:3}.pgx .th .eb input{position:absolute;inset:0;width:100%;height:100%;opacity:0;font-size:0;cursor:pointer}.pgx .th .mv{position:absolute;bottom:4px;width:30px;height:30px;border-radius:50%;border:0;background:#000a;color:#fff;font-size:18px;line-height:1;z-index:3;padding:0}.pgx .th .mv.l{left:4px}.pgx .th .mv.r{right:4px}';document.head.appendChild(st);
@@ -230,5 +219,22 @@ window.mvP=function(j,d){var a=CA[CUR].imgs,k=j+d;if(k<0||k>=a.length)return;var
 var _ds=drawSh;
 drawSh=function(){_ds();if(!OW)return;var ths=sh.querySelectorAll('.pgx .th:not(.add)'),n=ths.length;
  ths.forEach(function(th,j){th.insertAdjacentHTML('beforeend','<label class="eb" onclick="event.stopPropagation()">✏️<input type="file" accept="image/*" onchange="repP('+j+',this.files);this.value=\'\'"></label>'+(j>0?'<button class="mv l" onclick="event.stopPropagation();mvP('+j+',-1)">‹</button>':'')+(j<n-1?'<button class="mv r" onclick="event.stopPropagation();mvP('+j+',1)">›</button>':''))})};
+}catch(e){}})();
+/* ===== Package: poster bada dekho (zoom +/-) | photo tap = full-screen booking view (photo + add-ons + details + Book) ===== */
+(function(){try{
+var st=document.createElement('style');st.textContent='#pz{position:fixed;inset:0;z-index:70;background:#000;display:none;flex-direction:column}#pz.on{display:flex}#pz .pt{display:flex;gap:10px;align-items:center;padding:10px 12px;color:#fff}#pz .pt b{min-width:48px;text-align:center}#pz .pb2{border:1px solid #fff4;background:#ffffff1a;color:#fff;border-radius:18px;min-width:44px;height:40px;font-size:20px;font-weight:800;padding:0 12px}#pz .pw{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y pinch-zoom}#pz img{display:block;width:100%;max-width:none;height:auto}.zb{position:absolute;right:8px;top:8px;z-index:3;border:1px solid #fff5;border-radius:50%;width:36px;height:36px;background:#000b;color:#fff;font-size:16px!important;line-height:1;padding:0;display:flex;align-items:center;justify-content:center}.cf:not(.g)>div{position:relative}.zh{font-size:12px;opacity:.75;margin:-4px 0 8px;text-align:center}'
++'#p3 #ppo{align-items:stretch;background:#0a0618}#p3 #ppo .cd{max-width:none;max-height:none;height:100%;border-radius:0;border:0;padding:10px 14px 120px;animation:none}#p3 #ppo .sv{position:relative}#p3 #ppo .sv img{max-height:58vh;width:100%;object-fit:contain;border-radius:14px;background:#000}#p3 #ppo .pn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:#000b;color:#fff;font-size:26px;line-height:1;padding:0;z-index:3}#p3 #ppo .pn.l{left:6px}#p3 #ppo .pn.r{right:6px}#p3 #ppo .tp{font-size:12px;opacity:.7;margin:6px 0 0}';
+document.head.appendChild(st);
+var z=document.createElement('div');z.id='pz';z.innerHTML='<div class="pt"><button class="pb2" data-z="-">−</button><b id="pzl">100%</b><button class="pb2" data-z="+">+</button><span style="flex:1"></span><button class="pb2" data-z="x">✕</button></div><div class="pw"><img alt=""></div>';document.body.appendChild(z);
+var S=1,im=z.querySelector('img'),lb=z.querySelector('#pzl');
+function ap(){im.style.width=(S*100)+'%';lb.textContent=Math.round(S*100)+'%'}
+window.openPZ=function(src){im.src=src;S=1;ap();z.classList.add('on');z.querySelector('.pw').scrollTo(0,0);document.body.style.overflow='hidden'};
+z.addEventListener('click',function(e){var b=e.target.closest('[data-z]');if(!b)return;var k=b.dataset.z;if(k=='x'){z.classList.remove('on');if(!(window.p3&&p3.classList.contains('on')))document.body.style.overflow='';return}S=Math.max(1,Math.min(4,S+(k=='+'?.5:-.5)));ap()});
+document.querySelectorAll('.cf:not(.g)>div').forEach(function(c){var i=c.querySelector('img');if(!i)return;var b=document.createElement('button');b.className='zb';b.type='button';b.textContent='🔍';b.setAttribute('aria-label','Poster bada dekho');b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();openPZ(i.src)});c.appendChild(b)});
+var hn=document.querySelector('#pk+.hint');if(hn)hn.innerHTML='👆 Package kholein &nbsp;•&nbsp; 🔍 poster bada karein';
+if(window.po3){po3.onclick=function(){openPZ(po3.src)};po3.insertAdjacentHTML('afterend','<div class="zh">🔍 Poster bada karke dekhne ke liye tap karein</div>')}
+var _pk=pk3;pk3=function(i){_pk(i);var n=L3().length,sv=s3.querySelector('.sv');if(!sv)return;
+ sv.insertAdjacentHTML('beforeend',(i>0?'<button class="pn l" onclick="event.stopPropagation();pk3('+(i-1)+')">‹</button>':'')+(i<n-1?'<button class="pn r" onclick="event.stopPropagation();pk3('+(i+1)+')">›</button>':''));
+ sv.insertAdjacentHTML('afterend','<p class="tp">👆 Photo par tap = poori screen. Neeche add-ons, event details aur Book.</p>')};
 }catch(e){}})();
 </script></body></html>
