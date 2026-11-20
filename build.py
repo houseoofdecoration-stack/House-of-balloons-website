@@ -133,7 +133,7 @@ def _v6(t):
     if 'wafab' not in b:b=b.replace('<nav class="tab">',fab+'<nav class="tab">',1)
     if 'manifest.webmanifest' not in h:h=h.replace('</head>','<style>'+css+'</style><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"></head>',1)
     if 'serviceWorker' not in b:b=b.replace('</body>','<script>if("serviceWorker"in navigator&&location.protocol==="https:")addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})</script></body>',1)
-    return h+b
+    return (h+b).replace('#ffd24d','#fff')
 t=_v6(t)
 open('index.html','w',encoding='utf8').write(t)
 print(n[0],len(s),len(t))
