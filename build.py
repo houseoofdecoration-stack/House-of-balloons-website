@@ -111,5 +111,29 @@ _i=t.rfind('</body>')
 t=t[:_i]+_alts+t[_i:]
 _urls=[_u]+[_u+'balloon-decoration-'+s+'/' for s,_a,_b,_c in _AR]
 open('sitemap.xml','w',encoding='utf8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+x+'</loc><lastmod>'+datetime.date.today().isoformat()+'</lastmod><changefreq>weekly</changefreq><priority>'+('1.0' if x==_u else '0.8')+'</priority></url>' for x in _urls)+'</urlset>\n')
+
+# --- v6 (20 Nov 2026): fast loading, FAQ accordion, WhatsApp button, PWA ---
+import re as _re
+def _v6(t):
+    bi=t.find('<body');h,b=t[:bi],t[bi:]
+    def lz(m):
+        tag=m.group(0)
+        if 'loading=' in tag:return tag
+        if _re.search(r'src="img/0[123]\.jpg"',tag):
+            return tag if 'img/01' in tag else tag.replace('<img ','<img fetchpriority="high" decoding="async" ',1)
+        return tag.replace('<img ','<img loading="lazy" decoding="async" ',1)
+    parts=_re.split(r'(<script\b.*?</script>)',b,flags=_re.S)
+    b=''.join(p if p.startswith('<script') else _re.sub(r'<img [^>]*>',lz,p) for p in parts)
+    m=_re.search(r'<section class="seo" id="about">.*?</section>',b,_re.S)
+    if m:
+        sx=m.group(0)
+        sx2=_re.sub(r'<h3>([^<]*\?)</h3><p>(.*?)</p>',lambda k:'<details class="fq"><summary>%s</summary><p>%s</p></details>'%(k.group(1),k.group(2)),sx,flags=_re.S)
+        b=b.replace(sx,sx2)
+    fab=open('v6_fab.html',encoding='utf8').read().strip();css=open('v6.css',encoding='utf8').read().strip()
+    if 'wafab' not in b:b=b.replace('<nav class="tab">',fab+'<nav class="tab">',1)
+    if 'manifest.webmanifest' not in h:h=h.replace('</head>','<style>'+css+'</style><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"></head>',1)
+    if 'serviceWorker' not in b:b=b.replace('</body>','<script>if("serviceWorker"in navigator&&location.protocol==="https:")addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})</script></body>',1)
+    return h+b
+t=_v6(t)
 open('index.html','w',encoding='utf8').write(t)
 print(n[0],len(s),len(t))
