@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>House of Balloons - Review</title>
+<style>
+:root{--bg:#120a24;--card:#1e1236;--ink:#fff;--mut:#cdbfe8;--acc:#ff7ad1;--gold:#ffc83d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:20px 16px 40px}
+.w{max-width:560px;margin:0 auto}
+h1{font-size:22px;margin:6px 0 4px;text-align:center}
+p.s{color:var(--mut);text-align:center;margin:0 0 14px}
+.stars{display:flex;justify-content:center;gap:6px;font-size:42px;margin:6px 0 16px;color:var(--gold)}
+.t{background:var(--card);border:1px solid #3a2a60;border-radius:14px;padding:14px;margin:10px 0}
+.t q{display:block;quotes:none;margin-bottom:10px}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:12px 14px;width:100%;background:var(--acc);color:#2a0a22;cursor:pointer}
+button.g{background:#fff;color:#111}
+a.d{display:block;text-align:center;color:#fff;text-decoration:underline;margin:18px 0 6px}
+#toast{position:fixed;left:16px;right:16px;bottom:22px;background:#16a34a;color:#fff;padding:14px;border-radius:12px;text-align:center;font-weight:700;display:none}
+.n{color:var(--mut);font-size:13px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>House of Balloons 🎈</h1>
+<p class="s">5 star dein aur neeche se apni pasand ka review chun lein. Ek tap par text copy ho jayega, Google me bas paste karna hai.</p>
+<div class="stars" aria-label="5 star">★★★★★</div>
+<div id="list"></div>
+<button class="g" id="more" type="button">🔄 Aur options dikhao</button>
+<a class="d" id="direct" href="https://g.page/r/CdSCOkWN53QxEBM/review" rel="noopener">Khud likhna hai? Seedha Google par jao</a>
+<div class="n">Text apne hisaab se badal bhi sakte hain. Shukriya! 🙏</div>
+</div>
+<div id="toast"></div>
+<script>
+var LINK="https://g.page/r/CdSCOkWN53QxEBM/review";
+var T=[
+"Bahut hi sundar balloon decoration kiya. Time par setup ho gaya aur sab kuch bilkul waisa hi tha jaisa chahiye tha. Highly recommended!",
+"House of Balloons ne hamare bachche ke birthday ko yaadgaar bana diya. Decoration shandaar tha aur sabko bahut pasand aaya.",
+"Great decoration at a fair price. The team was polite, arrived on time and the setup looked amazing. Thank you House of Balloons!",
+"Anniversary decoration bahut romantic tha. Colours aur setup dono kamaal ke the. Dil se shukriya!",
+"Baby shower ke liye booking ki thi, decoration bahut hi pyara laga. Sabne tareef ki. Best service!",
+"Professional team, time par pahunche aur kaam bahut saaf-suthra kiya. Photos mein decoration kamaal lag raha tha.",
+"Budget mein itna accha decoration milna mushkil hai. Quality bhi badhiya aur behavior bhi. Zaroor book karein.",
+"Lovely balloon setup for our party! Everything was neat, colourful and exactly as we discussed. Would definitely book again.",
+"Booking se lekar setup tak sab kuch smooth raha. Customer service bahut achhi hai. 5 star ke hakdaar!",
+"Mehmano ko decoration itna pasand aaya ki sabne photos li. Thank you House of Balloons, ab har function mein aapko hi bulayenge."
+];
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
+var order=shuf(T),pos=0;
+function toast(m){var e=document.getElementById("toast");e.textContent=m;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(function(){e.style.display="none"},3500)}
+function copy(t,cb){
+  function fb(){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.focus();a.select();try{document.execCommand("copy")}catch(e){}a.remove();cb()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(cb,fb)}else fb()
+}
+function draw(){
+  var box=document.getElementById("list");box.innerHTML="";
+  for(var i=0;i<5;i++){
+    var t=order[(pos+i)%order.length];
+    var d=document.createElement("div");d.className="t";
+    var q=document.createElement("q");q.textContent=t;d.appendChild(q);
+    var b=document.createElement("button");b.type="button";b.textContent="✅ Ye use karo";
+    b.onclick=(function(t){return function(){copy(t,function(){toast("Copy ho gaya! Google me 5 star dein aur paste karein");setTimeout(function(){location.href=LINK},1300)})}})(t);
+    d.appendChild(b);box.appendChild(d)
+  }
+}
+document.getElementById("more").onclick=function(){pos=(pos+5)%order.length;draw();window.scrollTo({top:0,behavior:"smooth"})};
+draw();
+</script>
+</body>
+</html>
