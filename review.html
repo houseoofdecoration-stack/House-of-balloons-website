@@ -25,7 +25,7 @@ a.d{display:block;text-align:center;color:#fff;text-decoration:underline;margin:
 <body>
 <div class="w">
 <h1>House of Balloons 🎈</h1>
-<p class="s">5 star dein aur neeche se apni pasand ka review chun lein. Ek tap par text copy ho jayega, Google me bas paste karna hai.</p>
+<p class="s">Neeche se apni pasand ka review chun lein. Ek tap par text copy ho jayega, Google me bas paste karna hai.</p>
 <div class="stars" aria-label="5 star">★★★★★</div>
 <div id="list"></div>
 <button class="g" id="more" type="button">🔄 Aur options dikhao</button>
@@ -37,15 +37,15 @@ a.d{display:block;text-align:center;color:#fff;text-decoration:underline;margin:
 var LINK="https://g.page/r/CdSCOkWN53QxEBM/review";
 var T=[
 "Bahut hi sundar balloon decoration kiya. Time par setup ho gaya aur sab kuch bilkul waisa hi tha jaisa chahiye tha. Highly recommended!",
-"House of Balloons ne hamare bachche ke birthday ko yaadgaar bana diya. Decoration shandaar tha aur sabko bahut pasand aaya.",
+"Decoration shandaar tha aur sabko bahut pasand aaya. House of Balloons ki team ka kaam ekdum professional raha.",
 "Great decoration at a fair price. The team was polite, arrived on time and the setup looked amazing. Thank you House of Balloons!",
-"Anniversary decoration bahut romantic tha. Colours aur setup dono kamaal ke the. Dil se shukriya!",
-"Baby shower ke liye booking ki thi, decoration bahut hi pyara laga. Sabne tareef ki. Best service!",
+"Colours aur setup dono kamaal ke the. Dil se shukriya, bahut accha experience raha!",
 "Professional team, time par pahunche aur kaam bahut saaf-suthra kiya. Photos mein decoration kamaal lag raha tha.",
 "Budget mein itna accha decoration milna mushkil hai. Quality bhi badhiya aur behavior bhi. Zaroor book karein.",
-"Lovely balloon setup for our party! Everything was neat, colourful and exactly as we discussed. Would definitely book again.",
+"Lovely balloon setup! Everything was neat, colourful and exactly as we discussed. Would definitely book again.",
 "Booking se lekar setup tak sab kuch smooth raha. Customer service bahut achhi hai. 5 star ke hakdaar!",
-"Mehmano ko decoration itna pasand aaya ki sabne photos li. Thank you House of Balloons, ab har function mein aapko hi bulayenge."
+"Mehmano ko decoration itna pasand aaya ki sabne photos li. Thank you House of Balloons!",
+"Very satisfied with the service. Beautiful work, on-time setup and friendly staff. Highly recommended."
 ];
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
 var order=shuf(T),pos=0;
@@ -56,7 +56,7 @@ function copy(t,cb){
 }
 function draw(){
   var box=document.getElementById("list");box.innerHTML="";
-  for(var i=0;i<5;i++){
+  for(var i=0;i<4;i++){
     var t=order[(pos+i)%order.length];
     var d=document.createElement("div");d.className="t";
     var q=document.createElement("q");q.textContent=t;d.appendChild(q);
@@ -65,7 +65,7 @@ function draw(){
     d.appendChild(b);box.appendChild(d)
   }
 }
-document.getElementById("more").onclick=function(){pos=(pos+5)%order.length;draw();window.scrollTo({top:0,behavior:"smooth"})};
+document.getElementById("more").onclick=function(){pos=(pos+4)%order.length;draw();window.scrollTo({top:0,behavior:"smooth"})};
 draw();
 </script>
 </body>
